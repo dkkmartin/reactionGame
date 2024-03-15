@@ -1,118 +1,59 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {useState} from 'react';
+import {StyleSheet, Text, View, Pressable} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+  const [playerOnePoints, setPlayerOnePoints] = useState(0);
+  const [playerTwoPoints, setPlayerTwoPoints] = useState(0);
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  const styles = StyleSheet.create({
+    container1: {
+      height: '50%',
+      width: '100%',
+      borderTopWidth: 2,
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      transform: [{rotate: '180deg'}],
+    },
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+    container2: {
+      height: '50%',
+      width: '100%',
+      borderTopWidth: 2,
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+    score: {
+      fontWeight: 'bold',
+      fontSize: 50,
+      paddingBottom: 12,
+    },
+  });
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const handlePressOne = () => {
+    setPlayerOnePoints(prev => prev + 1);
+  };
+  const handlePressTwo = () => {
+    setPlayerTwoPoints(prev => prev + 1);
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <>
+      <Pressable onPress={handlePressOne} style={styles.container1}>
+        <View>
+          <Text style={styles.score}>{playerOnePoints}</Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </Pressable>
+      <Pressable onPress={handlePressTwo} style={styles.container2}>
+        <View>
+          <Text style={styles.score}>{playerTwoPoints}</Text>
+        </View>
+      </Pressable>
+    </>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
